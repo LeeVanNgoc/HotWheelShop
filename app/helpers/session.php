@@ -5,8 +5,8 @@ class Session{
     public static function  start(){
         session_start();
     }
-    public static function  get($name){
-        echo $_SESSION[$name];
+    public static function get($name) {
+        return isset($_SESSION[$name]) ? $_SESSION[$name] : null;
     }
 
     public static function  destroy(){
