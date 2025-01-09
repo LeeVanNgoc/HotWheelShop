@@ -15,7 +15,7 @@
       
         $.ajax({
           method:"POST",
-          url:'http://localhost/projects/market/categories/search',
+          url:'http://localhost/HotWheelShop/categories/search',
           data:{search:txt},
           dataType:"text",
           success:function(data){
@@ -31,7 +31,7 @@
       
         $.ajax({
           method:"POST",
-          url:'http://localhost/projects/market/products/search',
+          url:'http://localhost/HotWheelShop/products/search',
           data:{search:txt},
           dataType:"text",
           success:function(data){
@@ -45,7 +45,7 @@
       
         $.ajax({
           method:"POST",
-          url:'http://localhost/projects/market/manufactures/search',
+          url:'http://localhost/HotWheelShop/manufactures/search',
           data:{search:txt},
           dataType:"text",
           success:function(data){
