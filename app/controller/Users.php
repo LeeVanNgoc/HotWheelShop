@@ -370,7 +370,7 @@
 
                     if(empty($data['errPassword'])){
                         if($this->userModel->resetP($vkey,$hashedPassword)){
-                            sendpass($email,$vkey);
+                            // sendpass($email,$vkey);
                             Session::set('danger', 'Please login with new password');
                             Redirect::to('users/login');
                         }else{

@@ -175,7 +175,7 @@
                     //     $charge = \Stripe\Charge::create([
                     //     'amount' => $qty * 100,
                     //     'currency' => 'usd', 
-                    //     'description' => 'Transaction from market website',
+                    //     'description' => 'Transaction from HơtheelShop website',
                     //     'customer' => $customer->id
                     //     ]);
 
