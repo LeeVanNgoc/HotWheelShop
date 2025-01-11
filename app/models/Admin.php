@@ -71,5 +71,11 @@
             return $this->db->execute();
         }
 
-        
+        public function getAllUsers() {
+            // Truy vấn lấy tất cả người dùng, trừ admin
+            $this->db->query("SELECT * FROM users WHERE admin = 0");  // Giả sử `admin = 0` là người dùng bình thường
+            $users = $this->db->resultSet();  // Lấy tất cả kết quả và lưu vào mảng
+            return $users;  // Trả về danh sách người dùng
+        }
+
     }

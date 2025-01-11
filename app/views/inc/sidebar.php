@@ -31,6 +31,13 @@
                     <a class="dropdown-item" href="<?php echo URL ?>/products/add">Add Product</a>
                 </div>
             </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle"  id="dropdown02" data-toggle="dropdown">User Managerment</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown02">
+                    <a class="dropdown-item" href="<?php echo URL ?>/userManagerments">All Users</a>
+                    <a class="dropdown-item" href="<?php echo URL ?>/userManagerments/add">Add User</a>
+                </div>
+            </li>
 
             <li class="nav-item">
                     <a class="nav-link" href="<?php echo URL ?>/orders">Orders</a>

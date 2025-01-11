@@ -155,71 +155,71 @@
         // }
 
         public function update($id) {
-    Auth::adminAuth();
-    Csrf::CsrfToken();
-    $data['title1'] = 'Edit Brand';
+            Auth::adminAuth();
+            Csrf::CsrfToken();
+            $data['title1'] = 'Edit Brand';
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['editManufacture']) {
-        $man_name = $_POST['manufacture'];
-        $man_id = $_POST['man_id'];
-        $description = $_POST['description'];
-        $brand = $_POST['brand'];
-        $man_user = Session::name('admin_id');
-        $oldImg = $_POST['oldImg'];  // Lấy ảnh cũ từ form
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['editManufacture']) {
+                $man_name = $_POST['manufacture'];
+                $man_id = $_POST['man_id'];
+                $description = $_POST['description'];
+                $brand = $_POST['brand'];
+                $man_user = Session::name('admin_id');
+                $oldImg = $_POST['oldImg'];  // Lấy ảnh cũ từ form
 
-        $image = $_FILES['image']['name'];
-        $image_tmp = $_FILES['image']['tmp_name'];
-        $image_type = $_FILES['image']['type'];
+                $image = $_FILES['image']['name'];
+                $image_tmp = $_FILES['image']['tmp_name'];
+                $image_type = $_FILES['image']['type'];
 
-        if (!empty($image)) {
-            // Nếu có ảnh mới, xử lý upload
-            $uploaddir = dirname(ROOT) . '\public\uploads\manufactures\\';
-            unlink($uploaddir . $oldImg);  // Xóa ảnh cũ nếu có
-            $image = explode('.', $image);
-            $image_ext = $image[1];
-            $image = $image[0] . time() . '.' . $image_ext;
+                if (!empty($image)) {
+                    // Nếu có ảnh mới, xử lý upload
+                    $uploaddir = dirname(ROOT) . '\public\uploads\manufactures\\';
+                    unlink($uploaddir . $oldImg);  // Xóa ảnh cũ nếu có
+                    $image = explode('.', $image);
+                    $image_ext = $image[1];
+                    $image = $image[0] . time() . '.' . $image_ext;
 
-            // Kiểm tra loại ảnh hợp lệ
-            if ($image_ext != "jpg" && $image_ext != "png" && $image_ext != "jpeg" && $image_ext != "gif") {
-                $data['errImg'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                    // Kiểm tra loại ảnh hợp lệ
+                    if ($image_ext != "jpg" && $image_ext != "png" && $image_ext != "jpeg" && $image_ext != "gif") {
+                        $data['errImg'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                    }
+                } else {
+                    // Nếu không có ảnh mới, giữ ảnh cũ
+                    $image = $oldImg;
+                }
+
+                // Kiểm tra các lỗi đầu vào khác
+                if (strlen($man_name) < 3) {
+                    $data['errMan'] = 'Manufacture name must not be less than 3 characters';
+                } elseif ($this->manufactureModel->findManName($man_name, $man_id) > 0) {
+                    $data['errMan'] = 'This name already exists, choose another one';
+                }
+
+                if (strlen($description) < 5) {
+                    $data['errDes'] = 'Manufacture description must not be less than 5 characters';
+                }
+
+                if (strlen($brand) < 3) {
+                    $data['errBrand'] = 'Brand name must not be less than 3 characters';
+                }
+
+                if (empty($data['errMan']) && empty($data['errDes']) && empty($data['errBrand']) && empty($data['errImg'])) {
+                    // Move ảnh vào thư mục uploads
+                    move_uploaded_file($image_tmp, $uploaddir . $image);
+
+                    // Cập nhật manufacture vào cơ sở dữ liệu
+                    $this->manufactureModel->update($id, $man_name, $description, $brand, $image);
+                    Session::set('success', 'Manufacture has been edited successfully');
+                    Redirect::to('manufactures');
+                } else {
+                    // Nếu có lỗi, trả lại dữ liệu và hiển thị lỗi
+                    $data['manufacture'] = $this->manufactureModel->show($id);
+                    $this->view('manufactures.edit', $data);
+                }
+            } else {
+                Redirect::to('manufactures');
             }
-        } else {
-            // Nếu không có ảnh mới, giữ ảnh cũ
-            $image = $oldImg;
         }
-
-        // Kiểm tra các lỗi đầu vào khác
-        if (strlen($man_name) < 3) {
-            $data['errMan'] = 'Manufacture name must not be less than 3 characters';
-        } elseif ($this->manufactureModel->findManName($man_name, $man_id) > 0) {
-            $data['errMan'] = 'This name already exists, choose another one';
-        }
-
-        if (strlen($description) < 5) {
-            $data['errDes'] = 'Manufacture description must not be less than 5 characters';
-        }
-
-        if (strlen($brand) < 3) {
-            $data['errBrand'] = 'Brand name must not be less than 3 characters';
-        }
-
-        if (empty($data['errMan']) && empty($data['errDes']) && empty($data['errBrand']) && empty($data['errImg'])) {
-            // Move ảnh vào thư mục uploads
-            move_uploaded_file($image_tmp, $uploaddir . $image);
-
-            // Cập nhật manufacture vào cơ sở dữ liệu
-            $this->manufactureModel->update($id, $man_name, $description, $brand, $image);
-            Session::set('success', 'Manufacture has been edited successfully');
-            Redirect::to('manufactures');
-        } else {
-            // Nếu có lỗi, trả lại dữ liệu và hiển thị lỗi
-            $data['manufacture'] = $this->manufactureModel->show($id);
-            $this->view('manufactures.edit', $data);
-        }
-    } else {
-        Redirect::to('manufactures');
-    }
-}
 
 
         /*>>>>>>>>>>>>>>>>>>>>*/
