@@ -209,6 +209,10 @@
             $this->view('admins.dashboard', $data);
         }
 
-
+         public function usersList() {
+            $users = $this->adminModel->getAllUsers();  // Gọi phương thức lấy tất cả người dùng
+            $data['users'] = $users;  // Lưu kết quả vào biến `$data`
+            $this->view('admins.usersList', $data);  // Truyền dữ liệu vào view để hiển thị
+        }
     }
     
