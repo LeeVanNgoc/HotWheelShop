@@ -30,6 +30,15 @@ class Auth{
         }
     }
 
+    // public static function  adminGuest(){
+    //     if(!isset($_SESSION['admin_id'])){
+    //         return true;
+    //     }else {
+    //         Session::set('danger', 'You are already signed');
+    //         Redirect::to('admins/profile');
+    //     }
+    // }
+
 
     public static function  adminGuest(){
         if(!isset($_SESSION['admin_id'])){

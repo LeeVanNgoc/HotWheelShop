@@ -9,7 +9,7 @@
                 
                         <div class="card-header">
                             <h5 class='text-muted text-center'>Welcome To Dashboard <span class='text-success'><?php echo $data['admin_name'] ?></span></h5>
-                            <?php print_r($_SESSION) ?>
+                            <!-- <?php print_r($_SESSION) ?> -->
                         </div>
                         <div class="card-body">
                             

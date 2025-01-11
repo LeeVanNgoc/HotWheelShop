@@ -17,7 +17,7 @@
                                 <th><i class="fa fa-mobile"></i> Mobile</th>
                             </thead>
                             <tbody>
-                                <td> <?php Session::get('user_name') ?></td>
+                                <td> <?php echo Session::get('user_name') ?></td>
                                 <td><?php echo $data['shipping']->mobile ?></td>
                             </tbody>
                             

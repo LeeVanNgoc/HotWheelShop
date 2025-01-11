@@ -10,12 +10,18 @@ class Session{
     }
 
     public static function  destroy(){
+        $_SESSION = [];  
         session_destroy();
     }
 
-    public static function  name($name){
-        return $_SESSION[$name];
+    // public static function  name($name){
+    //     return $_SESSION[$name];
+    // }
+
+    public static function name($name) {
+        return self::get($name);
     }
+
 
     public static function  set($name, $msg){
        return $_SESSION[$name] = $msg;
