@@ -2,7 +2,7 @@
 <?php require_once ROOT ."/views/inc/sidebar.php" ?>
 
 <div class="mt-4">
-    <h1 class="text-center">Brand Information</h1>
+    <h1 class="text-center">Manufacture Information</h1>
     <div class="card">
         <div class="card-header">
             <h6><?php echo $data['manufacture']->man_name ?></h6>

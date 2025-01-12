@@ -5,7 +5,7 @@ class Home extends Controller {
     private $categoryModel;
     private $manufactureModel;
     private $productModel;
-    private $userManagementModel;
+    private $userManagermentModel;
 
     /*>>>>>>>>>>>>>>>>>>>>*/
     #<--->  construct <--->#
@@ -15,7 +15,7 @@ class Home extends Controller {
         $this->categoryModel = $this->model('Category');
         $this->manufactureModel = $this->model('Manufacture');
         $this->productModel = $this->model('Product');
-        $this->userManagementModel = $this->model('UserManagement'); // Thêm model UserManagement
+        $this->userManagermentModel = $this->model('UserManagerment'); // Thêm model UserManagerment
     }
     
     /*>>>>>>>>>>>>>>>>>>>>*/
@@ -26,7 +26,7 @@ class Home extends Controller {
         $data['categories'] = $this->categoryModel->getAllCat(1);
         $data['manufactures'] = $this->manufactureModel->getAllMan(1);
         $data['products'] = $this->productModel->getAllPro(1);
-        $data['users'] = $this->userManagementModel->getAllUsers(); // Lấy danh sách người dùng
+        $data['users'] = $this->userManagermentModel->getAllUsers(); // Lấy danh sách người dùng
         $data['price_ranges'] = [
             ['label' => 'Below $5000', 'min' => 0, 'max' => 5000],
             ['label' => '$5000 - $10000', 'min' => 5000, 'max' => 10000],
