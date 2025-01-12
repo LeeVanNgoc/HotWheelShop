@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 20, 2024 lúc 11:34 AM
+-- Thời gian đã tạo: Th1 12, 2025 lúc 02:24 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -41,7 +41,7 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cart_id`, `user`, `price`, `product`, `qty`, `created_at`) VALUES
-(2, 6, '656', 1, 1, '2024-12-19 07:23:03');
+(7, 6, '59000', 3, 1, '2025-01-12 13:18:51');
 
 -- --------------------------------------------------------
 
@@ -63,7 +63,13 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`cat_id`, `cat_name`, `cat_user`, `description`, `active`, `created_at`) VALUES
-(1, 'Phones', 4, 'sdcfdvdfvdffvdf', 1, '2019-06-11 09:42:03');
+(2, 'New Models', 6, 'Phiên bản mới nhất', 1, '2025-01-12 07:51:18'),
+(3, 'Teams ', 6, 'Một dòng xe được sản xuất theo nhóm, mỗi nhóm có những đặc điểm khác nhau', 1, '2025-01-12 07:51:55'),
+(4, 'Track ', 6, 'Dòng xe chủ yếu cho những đường đua', 1, '2025-01-12 07:52:23'),
+(5, 'Treasure ', 6, 'Dòng xe này cực kỳ hiếm thấy, thường để sưu tầm.', 1, '2025-01-12 07:53:06'),
+(6, 'Event', 6, 'Các loại xe được thiết kế cho các sự kiện đặc biệt', 0, '2025-01-12 07:54:06'),
+(7, 'Basic', 6, 'Thể loại xe thường thấy', 0, '2025-01-12 08:03:46'),
+(8, 'Premium', 6, 'Thể loại xe đặc biệt và giới hạn                                    ', 0, '2025-01-12 08:04:12');
 
 -- --------------------------------------------------------
 
@@ -86,9 +92,11 @@ CREATE TABLE `c_order` (
 --
 
 INSERT INTO `c_order` (`order_id`, `customer_id`, `shipping_id`, `payment_id`, `order_total`, `order_status`, `created_at`) VALUES
-(1, 1, 2, 1, '690', 1, '2019-04-28 11:33:31'),
-(2, 1, 3, 2, '345', 0, '2019-05-18 08:22:07'),
-(3, 6, 4, 3, '656', 0, '2024-12-19 07:22:54');
+(3, 6, 4, 3, '656', 1, '2024-12-19 07:22:54'),
+(4, 6, 5, 4, '590000', 1, '2025-01-12 08:36:31'),
+(5, 6, 6, 5, '545000', 1, '2025-01-12 08:37:19'),
+(6, 6, 7, 6, '693000', 0, '2025-01-12 08:37:36'),
+(7, 6, 8, 7, '952000', 0, '2025-01-12 08:37:55');
 
 -- --------------------------------------------------------
 
@@ -112,7 +120,10 @@ CREATE TABLE `c_order_details` (
 --
 
 INSERT INTO `c_order_details` (`id`, `order_id`, `product_id`, `product_name`, `product_price`, `product_qty`, `user`, `created_at`) VALUES
-(1, 3, 1, 'Samsung G S9', '656', '1', 6, '2024-12-19 07:22:54');
+(2, 4, 3, 'Honda S800 Racing', '59000', '10', 6, '2025-01-12 08:36:31'),
+(3, 5, 7, 'Tred Shredder', '109000', '5', 6, '2025-01-12 08:37:19'),
+(4, 6, 11, '17 Ford GT', '99000', '7', 6, '2025-01-12 08:37:36'),
+(5, 7, 12, 'LB-Silhouette WORKS GT Nissan 35GT-RR VER.2', '119000', '8', 6, '2025-01-12 08:37:55');
 
 -- --------------------------------------------------------
 
@@ -126,18 +137,6 @@ CREATE TABLE `gallary` (
   `product_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Đang đổ dữ liệu cho bảng `gallary`
---
-
-INSERT INTO `gallary` (`gallary_id`, `image_name`, `product_id`, `created_at`) VALUES
-(1, 'phonex1560246238.jpg', 1, '2019-06-11 09:43:58'),
-(2, 'phonexplus1560246238.jpg', 1, '2019-06-11 09:43:58'),
-(3, 'samsung galaxy s61560246239.jpg', 1, '2019-06-11 09:43:59'),
-(4, 'samsung galaxy s71560246239.jpg', 1, '2019-06-11 09:43:59'),
-(5, 'samsung galaxy s81560246239.jpg', 1, '2019-06-11 09:43:59'),
-(6, 'samsung galaxy s91560246239.jpg', 1, '2019-06-11 09:43:59');
 
 -- --------------------------------------------------------
 
@@ -161,9 +160,15 @@ CREATE TABLE `manufactures` (
 --
 
 INSERT INTO `manufactures` (`man_id`, `man_name`, `man_user`, `active`, `description`, `created_at`, `brand`, `image`) VALUES
-(1, 'Samsung', 1, 1, 'cvdvbvrvdvrvrvrvr', '2019-04-28 10:41:33', '', ''),
-(3, 'Toshiba', 1, 1, 'i6h5g4grgrg', '2019-04-28 10:55:36', 'Toshibazo', '1609921608_31734446404.jpg'),
-(8, 'TestLa', 6, 1, 'hahahahahahaha 1111', '2024-12-17 08:43:29', 'TestLaaa', 'mau-hop-dong-thiet-ke-noi-that-11734446350.jpg');
+(9, 'Honda', 6, 1, 'Nhà sản sản xuất đến từ Nhật Bản', '2025-01-12 07:37:27', 'Honda', 'Honda_Logo.svg1736667447.png'),
+(10, 'Aston Martin', 6, 1, 'Nhà sản xuất đến từ vương quốc Anh', '2025-01-12 07:41:20', 'Aston Martin', 'aston-martin-1-logo-png-transparent1736667680.png'),
+(11, 'Chevrolet', 6, 1, 'Nhà sản xuất đến từ Mỹ', '2025-01-12 07:42:03', 'Chevrolet', 'Chevrolet-logo1736667723.png'),
+(12, 'Lamborghini', 6, 1, 'Hãng xe sang đến từ Ý', '2025-01-12 07:44:02', 'Lamborghini', 'images1736667842.png'),
+(13, 'Ford', 6, 1, 'Hãng xe đến từ Mỹ', '2025-01-12 07:44:42', 'Ford', 'Ford_logo_flat.svg1736667882.png'),
+(14, 'Nissan', 6, 1, 'Hãng xe đến từ Nhật', '2025-01-12 07:46:17', 'Nissan', 'logo1736667977.png'),
+(15, 'Mclaren', 6, 1, 'Hãng xe đến từ nước Anh', '2025-01-12 07:47:23', 'Mclaren', 'pngimg.com - Mclaren_PNG21736668043.png'),
+(16, 'Mazda', 6, 1, 'Hãng xe đến từ Nhật Bản', '2025-01-12 07:48:06', 'Mazda', 'Mazda-Logo1736668086.png'),
+(17, 'Hot Wheels', 6, 0, 'Nhà phân phối chính', '2025-01-12 08:11:13', 'Hot Wheels', 'images (1)1736669473.png');
 
 -- --------------------------------------------------------
 
@@ -186,7 +191,11 @@ CREATE TABLE `payment` (
 INSERT INTO `payment` (`Payment_id`, `payment_method`, `payment_status`, `payment_shipping`, `created_at`) VALUES
 (1, 'cash', 0, 2, '2019-04-28 11:33:30'),
 (2, 'cash', 0, 3, '2019-05-18 08:22:07'),
-(3, 'cash', 0, 4, '2024-12-19 07:22:54');
+(3, 'cash', 0, 4, '2024-12-19 07:22:54'),
+(4, 'cash', 0, 5, '2025-01-12 08:36:31'),
+(5, 'cash', 0, 6, '2025-01-12 08:37:19'),
+(6, 'cash', 0, 7, '2025-01-12 08:37:36'),
+(7, 'cash', 0, 8, '2025-01-12 08:37:55');
 
 -- --------------------------------------------------------
 
@@ -214,7 +223,16 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `name`, `description`, `cat`, `man`, `user`, `active`, `image`, `color`, `size`, `price`, `created_at`) VALUES
-(1, 'Samsung G S9', 'dgrdgrrgerdgedgergregr', 1, 1, 4, 1, 'samsung galaxy s91560246211.jpg', 'Red', '5.5 inch', 656, '2019-06-11 09:43:31');
+(3, 'Honda S800 Racing', 'Honda S800 là một chiếc xe thể thao 2 cửa được sản xuất năm 1966 đến 1970, để thay thế chiếc S600. Với động cơ 0.8L I4 và 9500 rpm, hộp số 4 số, nó có tên gọi là chiếc xe phân hạng 1L nhanh nhất thế giới', 4, 9, 6, 1, 's-l4001736669009.jpg', 'Yellow', '20', 59000, '2025-01-12 08:03:29'),
+(4, 'Aston Martin DB4GT High-Speed Edition', 'Aston Martin DB4GT High-Speed Edition\r\n', 2, 10, 6, 1, 'images1736669236.jpg', 'Silver White ', '40', 59000, '2025-01-12 08:07:16'),
+(5, '59 Chevy Impala (Treasure Hunt)', 'Đời thứ 2 của dòng Chevrolet Impala, sản xuất vỏn vẹn trong 1 năm (1959 - 1960), chiếc xe này là 1 gương mặt quen thuộc trong giới lowrider - giới xe Mỹ độ hạ gầm. Tồn tại dưới dạng 2 hoặc 4 cửa, động cơ I6 hoặc V8 và kiểu dáng đặc trưng với đèn hậu thiết kế theo hình giọt nước, đây là chiếc xe không thể thiếu trong bộ sưu tập của người chơi xe cổ.\r\n', 8, 11, 6, 1, 'maxresdefault1736669334.jpg', 'Silver Black', '40', 89000, '2025-01-12 08:08:54'),
+(6, 'Roll Cage', 'Roll Cage là một chiếc xe do chính Hot Wheels thiết kế. Với ý tưởng chinh phục những bãi cát trên sa mạc hay địa hình hiểm trở trên núi, họ đã tạo nên một con xe có thiết kế chỉ có khung không có tấm chắn bảo vệ. Mặc dù khi lái có thể gây cảm giác khó chịu vì bụi, cát nhưng chiếc xe này là người bạn hoàn hảo khi bạn muốn tham gia vào những trò mạo hiểm.\r\n', 7, 17, 6, 1, 'images (1)1736669421.jpg', 'Yellow', '40', 49000, '2025-01-12 08:10:21'),
+(7, 'Tred Shredder', 'Sự thay thế của Gallardo, một con xe mà từ triệu phú tới tỷ phú ai cũng phải có, Huracán mang trong mình hình tượng kinh điển của Lamborghini cũng nhưng những cải tiến mới nhất về mặt thiết kế cũng như là hiệu năng. Mang trong mình động cơ 5.2L CSJ V10 với 612 mã lực, và giờ với bản đặc biệt Super Trofeo chuyên về đua xe, chiếc xe này hiện tại là gương mặt tiêu biểu của Lamborghini trong các giải đấu. \r\n', 5, 12, 6, 1, 'lamborghini-huracan_lp620-2_super_trofeo_2015_1_5269_20871736669564.jpg', 'Grey', '40', 109000, '2025-01-12 08:12:44'),
+(8, 'Lamborghini Huracán LP 620-2 Super Trofeo (Super Treasure Hunt)', 'Sự thay thế của Gallardo, một con xe mà từ triệu phú tới tỷ phú ai cũng phải có, Huracán mang trong mình hình tượng kinh điển của Lamborghini cũng nhưng những cải tiến mới nhất về mặt thiết kế cũng như là hiệu năng. Mang trong mình động cơ 5.2L CSJ V10 với 612 mã lực, và giờ với bản đặc biệt Super Trofeo chuyên về đua xe, chiếc xe này hiện tại là gương mặt tiêu biểu của Lamborghini trong các giải đấu. ', 4, 12, 6, 1, '$_571736669639.jpg', 'Red', '40', 1500000, '2025-01-12 08:13:59'),
+(9, 'Mazda RX7', 'Cùng với R34 của Nissan và Supra của Toyota, dòng RX của Mazda cũng là một trong những cái tên không thể không nhắc tới khi nói đến JDM (Japanese Domestic Market). Với động cơ Rotary 13B có thiết kế độc lạ nhất, sản sinh ra 276 mã lực, RX7 đã làm mưa làm gió giới JDM cho tới tận bây giờ, đủ để chứng minh nó xứng đáng được gọi là \"huyền thoại\" khi được xuất hiện trong nhiều bộ phim đình đám về đua xe như Initial D hay Fast and Furious.', 3, 16, 6, 1, 'images (2)1736669696.jpg', 'Red', '40', 99000, '2025-01-12 08:14:56'),
+(10, 'McLaren P1', 'Chiếc P1 được sinh ra để kế thừa và phát huy truyền thống của huyền thoại McLaren F1: nhanh, chính xác và rất bắt mắt, và chiếc xe này đã làm nhiều hơn thế. Với thiết kế mềm mại và mượt, và động cơ 3.8L McLaren M838TQ twin-turbo V8 và động cơ điện riêng biệt đồng thời sản sinh ra 903 mã lực, chiếc xe này vừa mang trong mình khả năng của một chiếc xe đua F1 thực sự, và cũng mang trong mình độ hiếm của nó khi số lượng sản xuất chỉ vỏn vẹn 375 chiếc toàn thế giới', 8, 15, 6, 1, 'vn-11134207-7r98o-ly57fimnyisha41736669771.jpg', 'Blue', '40', 99000, '2025-01-12 08:16:11'),
+(11, '17 Ford GT', 'Đời thứ 2 của dòng Ford GT, được vén màn tại buổi triển lãm North American Auto Show cùng với game đình đám Forza Motorsport, chiếc xe hứa hẹn sẽ tiếp nối truyền thống siêu xe duy nhất của Ford. Và với động cơ 3.5L Ecoboost D35 V6 sản sinh ra 647 mã lực và mới đây được nâng cấp lên 660, chiếc xe này đúng xứng đáng với cái tên của nó.', 2, 13, 6, 1, 'hq7201736669856.jpg', 'White', '40', 99000, '2025-01-12 08:17:36'),
+(12, 'LB-Silhouette WORKS GT Nissan 35GT-RR VER.2', 'Sự kết hợp giữa 2 thế lực lớn nhất thế giới trong ngành của họ: Liberty Walk với các mẫu body kit hùng hổ, chất lượng và Nissan với mẫu xe R35, hậu thân của mẫu R34 nổi tiếng, và chính nó cũng nổi tiếng không kém. Sự kết hợp này đem lại cho chúng ta một con xe với từ duy nhất để miêu tả nó là một \"kiệt tác nghệ thuật\" của tốc độ và phong cách. ', 4, 14, 6, 1, 'hq720 (1)1736669911.jpg', 'White', '40', 119000, '2025-01-12 08:18:31');
 
 -- --------------------------------------------------------
 
@@ -240,7 +258,11 @@ INSERT INTO `shipping` (`shipping_id`, `full_name`, `email`, `mobile`, `address`
 (1, 'ibrahim elgadid', 'ibrahimelgadid30@gmail.com', '00102 487 6339', 'elsalam', 'kafr sqr', '2019-04-28 11:19:46'),
 (2, 'ibrahim elgadid', 'ibrahimelgadid30@gmail.com', '00102 487 6339', 'elsalam', 'kafr sqr', '2019-04-28 11:33:30'),
 (3, 'ibrahim elgadid', 'will123@gmail.com', '01024876339', 'elsalam', 'ÙƒÙØ± ØµÙ‚Ø±', '2019-05-18 08:22:06'),
-(4, 'Aozama', 'lee.admin@gmail.com', '10985645342123', '1234 Hà Nội', '1', '2024-12-19 07:22:54');
+(4, 'Aozama', 'lee.admin@gmail.com', '10985645342123', '1234 Hà Nội', '1', '2024-12-19 07:22:54'),
+(5, 'Aozama', 'lee.admin@gmail.com', '10985645342123', '1234 Hà Nội', '1', '2025-01-12 08:36:31'),
+(6, 'Aozama', 'lee.admin@gmail.com', '10985645342123', '1234 Hà Nội', '1', '2025-01-12 08:37:19'),
+(7, 'Aozama', 'lee.admin@gmail.com', '10985645342123', '1234 Hà Nội', '1', '2025-01-12 08:37:36'),
+(8, 'Aozama', 'lee.admin@gmail.com', '10985645342123', '1234 Hà Nội', '1', '2025-01-12 08:37:55');
 
 -- --------------------------------------------------------
 
@@ -267,10 +289,16 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `full_name`, `email`, `password`, `image`, `active`, `vkey`, `token_expire`, `verified`, `admin`, `created_at`) VALUES
-(1, 'ibrahim elgadid', 'ibrahimelgadid30@gmail.com', '$2y$10$nRqjt1LOwL6h3GzhMASkDutc/Yxy9gCZUeyN9EilWnHSpb/jLEFS6', 'hima1558167663.jpg', 1, 'ad7b0568a23953cd192690997accc9d3', '2019-05-18 08:21:03', 1, 1, '2019-04-28 10:26:07'),
-(3, 'emmma', 'emma123@gmail.com', '1', 'noimage.ong', 1, 'cdscccdvdvvferrfeffce', '2019-04-28 10:40:07', 1, 1, '2019-04-28 10:40:07'),
-(4, 'will smith', 'will123@gmail.com', '$2y$10$2qL3BvyXxqac0mnEtcxrCOIc1nK.jCCKb1Njes/Vs/XWvLNIHy9wq', '031560246033.png', 1, '62f473020aa5e20fec24064da17de737', '2019-06-11 09:41:08', 1, 1, '2019-06-11 09:33:42'),
-(6, 'Lee', 'lee.admin@gmail.com', '$2y$10$HplINg80CFjsl.FD0/GUJuOIubF7s/bEDsxtHYcG4dU81mUfgUfAi', 'noimage.png', 0, 'c5d4a8674208e92466bea4efdb8a6175', '2024-12-14 14:12:47', 1, 1, '2024-12-14 14:11:37');
+(6, 'Mr Lee', 'lee.admin@gmail.com', '$2y$10$QvZRL7VHws14NQXcxSfPXu9hNhfWsoxr4iWkeyBimHsNXoTz5myQK', 'Cutoe-pegy1736579817.jpg', 1, 'c5d4a8674208e92466bea4efdb8a6175', '2025-01-11 07:40:30', 1, 1, '2024-12-14 14:11:37'),
+(7, 'Ngọc', 'lee.admin1@gmail.com', '$2y$10$ZEAxjdPR7k.WzrKsn.nPk.5AQ1jpBVedV8xKbm55Ej6K8UUIO.k6m', '', 1, '', '2025-01-11 14:32:23', 0, 0, '2025-01-11 13:46:07'),
+(9, 'Trang', 'dotrang@gmail.com', '$2y$10$sQtEqxYUPiFEnjeZNYDbV.M.Naeb1OvF5PZDMyeQ43nQCopdPu3v.', '', 1, '', '2025-01-12 07:57:41', 0, 1, '2025-01-12 07:57:39'),
+(10, 'Hiếu', 'duyhieu@gmail.com', '$2y$10$nIxNXWbKwZ55caFHl0yY6eR/mrSTTa2qmpS4OcRUpu.in.mjzWpTW', '', 1, '', '2025-01-12 07:59:28', 0, 1, '2025-01-12 07:58:24'),
+(11, 'Thắng', 'dangthang@gmail.com', '$2y$10$JO.nxSaViQCRL9qR8enuJe5/buXF2SQM9ss18bggIfpQw.Xo8IyEi', '', 1, '', '2025-01-12 07:59:30', 0, 1, '2025-01-12 07:58:38'),
+(12, 'Sơn', 'hungson@gmail.com', '$2y$10$TVkl3dymZymACTIbfrq3L.0UWTwBSvNgdqmHKWl9bKVgG5juzZ0u.', '', 1, '', '2025-01-12 07:59:31', 0, 1, '2025-01-12 07:58:57'),
+(13, 'Hoa', 'hoaviolet@gmail.com', '$2y$10$vCH7FEV5vyBvYm6jCE.siO//albYtre22lc3pIWUzc/FrF8RYAbRO', '', 1, '', '2025-01-12 07:59:31', 0, 1, '2025-01-12 07:59:26'),
+(14, 'Đức', 'vanduc@gmail.com', '$2y$10$zXGFMTr8NvSpwAef3MoXR.482em/NSsHbzpARMNWdcL3y.DCIk/ZG', '', 1, '', '2025-01-12 07:59:51', 0, 1, '2025-01-12 07:59:48'),
+(15, 'Loan', 'hoangloan@gmail.com', '$2y$10$ZefYwNTaXcSVJYpIftv6qul4./ZmI7xNLd1q9s6LhbQ3bRM0Q7klq', '', 0, '', '2025-01-12 08:00:07', 0, 1, '2025-01-12 08:00:07'),
+(16, 'Thanh', 'vanthanh@gmail.com', '$2y$10$/LiDTM1w39w8NDCu7EZaYeyGuJSZHkg7uuShl5uVaFMQvzGcHFaaS', '', 0, '', '2025-01-12 08:00:40', 0, 1, '2025-01-12 08:00:40');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -356,25 +384,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `c_order`
 --
 ALTER TABLE `c_order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT cho bảng `c_order_details`
 --
 ALTER TABLE `c_order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `gallary`
@@ -386,31 +414,31 @@ ALTER TABLE `gallary`
 -- AUTO_INCREMENT cho bảng `manufactures`
 --
 ALTER TABLE `manufactures`
-  MODIFY `man_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `man_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT cho bảng `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `Payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `shipping`
 --
 ALTER TABLE `shipping`
-  MODIFY `shipping_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `shipping_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
