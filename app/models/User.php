@@ -11,7 +11,7 @@
            
             $this->db->query(
                     "INSERT INTO users (full_name,email,image,password,verified,vkey,admin,active)
-                    VALUES (:full_name,:email,:image,:password,0,:vkey,0,0)
+                    VALUES (:full_name,:email,:image,:password,1,:vkey,0,0)
                     ");
 
             $this->db->bind(':full_name',$fullname);
