@@ -214,5 +214,16 @@
             $data['users'] = $users;  // Lưu kết quả vào biến `$data`
             $this->view('admins.usersList', $data);  // Truyền dữ liệu vào view để hiển thị
         }
+
+        /*>>>>>>>>>>>>>>>>>>>>*/
+        #<---> dashboard  <--->#
+        /*<<<<<<<<<<<<<<<<<<<<*/
+        public function dashboard2(){
+            Auth::adminAuth();
+            $data['title1'] = 'Dashboard';
+            $arrayName = explode(' ', Session::name('admin_name'));
+            $data['admin_name'] = $arrayName[0];
+            $this->view('admins.dashboard2', $data);
+        }
     }
     

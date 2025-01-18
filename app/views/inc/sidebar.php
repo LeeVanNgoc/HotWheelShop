@@ -40,8 +40,12 @@
             </li>
 
             <li class="nav-item">
-                    <a class="nav-link" href="<?php echo URL ?>/orders">Orders</a>
-                </li>
+                <a class="nav-link" href="<?php echo URL ?>/orders">Orders</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL ?>/admins/dashboard2">Dashboard 2</a>
+            </li>
     
         </ul>
       </div>

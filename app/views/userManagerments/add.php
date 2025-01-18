@@ -51,6 +51,15 @@
                                     </div>
                                     <?php echo isset($data['errRole']) ? '<div class="invalid-feedback">'.$data['errRole'].'</div>' : '' ?>
                                 </div>
+
+                                <!-- Active Checkbox -->
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="active" name="active" value="1" <?php echo isset($_POST['active']) ? 'checked' : ''; ?>>
+                                    <label class="custom-control-label" for="active">Active</label>
+                                </div>
+                                <?php echo isset($data['errActive']) ? '<div class="invalid-feedback">'.$data['errActive'].'</div>' : '' ?>
+                            </div>
                             </div>
 
                             <!-- Image Upload Column (Right) -->
