@@ -1,57 +1,50 @@
-<?php require_once ROOT . "/views/inc/adminHeader.php" ?>
-<?php require_once ROOT . "/views/inc/sidebar.php" ?>
+<?php require_once ROOT ."/views/inc/adminHeader.php"; ?>
+<?php require_once ROOT ."/views/inc/sidebar.php"; ?>
 
-<div class="mt-4">
-    <h5 class="text-center">User Management</h5>
-    <div class="card">
-        <div class="card-header">
-            <h6>User List</h6>
+<div class="container mt-4">
+
+    <?php if (!empty($data['user'])) { ?>
+        <div class="card mx-auto w-75">
+            <div class="card-header bg-dark text-white text-center">
+                    <h2 class="text-center">User Information</h2>
+            </div>
+            <div class="card-body row">
+                <!-- Cột hiển thị thông tin người dùng -->
+                <div class="col-md-8">
+                    <p><strong>User ID:</strong> <?php echo $data['user']->user_id; ?></p>
+                    <p><strong>Full Name:</strong> <?php echo htmlspecialchars($data['user']->full_name); ?></p>
+                    <p><strong>Email:</strong> <?php echo htmlspecialchars($data['user']->email); ?></p>
+                    <p><strong>Phone:</strong> <?php echo !empty($data['user']->phone) ? $data['user']->phone : 'N/A'; ?></p>
+                    <p><strong>Address:</strong> <?php echo !empty($data['user']->address) ? $data['user']->address : 'N/A'; ?></p>
+                    <p><strong>Role:</strong> 
+                        <?php echo ($data['user']->admin == 1) ? '<span class="text-primary">Admin</span>' : '<span class="text-secondary">User</span>'; ?>
+                    </p>
+                    <p><strong>Status:</strong> 
+                        <?php echo $data['user']->active == 0 
+                            ? '<span class="text-danger">Inactive</span>' 
+                            : '<span class="text-success">Active</span>'; ?>
+                    </p>
+                    <p><strong>Created At:</strong> <?php echo $data['user']->created_at; ?></p>
+                </div>
+
+                <!-- Cột hiển thị Avatar -->
+                <div class='text-center mt-3'>
+                    <img style='height:200px;width:200px' class="img-thumbnail rounded-circle card-img-top" src="<?php echo URL ?>/uploads/<?php echo $data['user']->image ?>" alt="Card image cap">                
+                </div>
+
+
+            </div>
+            <div class="card-footer text-center">
+                <a href="<?php echo URL ?>/userManagerments" class="btn btn-primary btn-sm">Back to List</a>
+            </div>
         </div>
-        <div class="card-body">
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Status</th>
-                        <th>Role</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (count($data['users']) > 0) : ?>
-                        <?php foreach ($data['users'] as $user) : ?>
-                            <tr>
-                                <td><?php echo $user->user_id ?></td>
-                                <td><?php echo $user->name ?></td>
-                                <td><?php echo $user->email ?></td>
-                                <td>
-                                    <?php echo $user->active == 1 ? 
-                                        '<span class="badge badge-success">Active</span>' :
-                                        '<span class="badge badge-danger">Inactive</span>' ?>
-                                </td>
-                                <td><?php echo $user->role ?></td>
-                                <td>
-                                    <a href="<?php echo URL ?>/users/edit/<?php echo $user->user_id ?>" class="btn btn-sm btn-warning">Edit</a>
-                                    <a href="<?php echo URL ?>/users/delete/<?php echo $user->user_id ?>" class="btn btn-sm btn-danger">Delete</a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php else : ?>
-                        <tr>
-                            <td colspan="6" class="text-center">No users found</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <a href="<?php echo URL ?>/users/add" class="btn btn-sm btn-primary mt-4">
-        <i class="fa fa-plus"></i> Add New User
-    </a>
-
+    <?php } else { ?>
+        <p class="text-center text-danger">
+            <span class="btn btn-sm btn-danger" style="border-radius:50%">
+                <i class="fa fa-warning"></i>
+            </span> User not found.
+        </p>
+    <?php } ?>
 </div>
 
-<?php require_once ROOT . "/views/inc/adminFooter.php" ?>
+<?php require_once ROOT ."/views/inc/adminFooter.php"; ?>
