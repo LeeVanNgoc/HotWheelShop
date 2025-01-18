@@ -42,9 +42,9 @@
                                 <!-- Role Select -->
                                 <div class="input-group mb-3">
                                     <select class="custom-select <?php echo isset($data['errRole']) ? 'is-invalid' : '' ?>" name="admin">
-                                        <option selected>Choose admin...</option>
+                                        <option selected>User</option>
                                         <option value="1">Admin</option>
-                                        <option value="0">User</option>
+                                        <!-- <option value="0">User</option> -->
                                     </select>
                                     <div class="input-group-prepend">
                                         <label class="input-group-text" for="admin">Role</label>
