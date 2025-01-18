@@ -74,8 +74,8 @@
                         $this->userModel->register($fullname,$email,$img,$hashedPassword,$vkey);
                         Session::set('success','You can confirm now');
                         Session::set('email',$email);
-                        sendCode($vkey, $email);
-                        Redirect::to('users/confirm');
+                        // sendCode($vkey, $email);
+                        Redirect::to('users/login');
                        exit();
                     }else{
                         $this->view('users.register', $data);
