@@ -1,4 +1,7 @@
 <?php require_once ROOT ."/views/inc/header.php" ?>
+
+
+
 <div class="my-4 mx-auto">
     <h3 class='text-center my-4'>Our Products</h3>
     <form action="<?php echo URL ?>/home/search" method='POST' class='d-md-none w-50 mx-auto'>
@@ -90,11 +93,11 @@
                         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
                             <div class="card position-relative">
                                 <span class="badge badge-success position-absolute p-1 "><?php echo $pro->price?>$</span>
-                                <img style='height:200px' class="img-fluid" src="<?php echo URL ?>/uploads/<?php echo $pro->image ?>" alt="Card image cap">
+                                <img class="img-fluid" src="<?php echo URL ?>/uploads/<?php echo $pro->image ?>" alt="Card image cap">
                                 <div class="card-body">
                                     <h6 class="card-title"><?php echo $pro->name ?></h6>
-                                    <a href="<?php echo URL ?>/home/show/<?php echo $pro->product_id ?>" class="btn btn-info btn-sm py-1 float-left" style="font-size:13px">Details</a>
-                                    <a href="<?php echo URL ?>/carts/add/<?php echo $pro->product_id ?>/<?php echo $pro->price ?>" class="btn btn-danger btn-sm py-1 float-right" style="font-size:13px"><i class="fa fa-shopping-cart"></i></a>
+                                    <a href="<?php echo URL ?>/home/show/<?php echo $pro->product_id ?>" class="btn btn-info btn-sm py-1 float-left" >Details</a>
+                                    <a href="<?php echo URL ?>/carts/add/<?php echo $pro->product_id ?>/<?php echo $pro->price ?>" class="btn btn-danger btn-sm py-1 float-right" ><i class="fa fa-shopping-cart"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -108,6 +111,66 @@
         </div>
     </div>
 </div>
+
+<style>
+.product-list .col-lg-4, .product-list .col-md-6, .product-list .col-sm-12 {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%; /* Đảm bảo chiều ngang của card luôn chiếm 100% */
+    border: 1px solid #ddd; /* Optional: Thêm border để dễ nhìn */
+}
+
+.card img {
+    object-fit: cover; /* Đảm bảo ảnh không bị biến dạng */
+    height: 200px; /* Chiều cao cố định cho ảnh */
+    width: 100%; /* Ảnh sẽ luôn rộng như container */
+}
+
+.card-body {
+    flex-grow: 1; /* Đảm bảo body của card chiếm hết không gian còn lại */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-title {
+    font-size: 1rem; /* Điều chỉnh font-size cho vừa vặn */
+    margin-bottom: 10px;
+}
+
+.btn {
+    font-size: 13px;
+    padding: 5px 10px;
+    margin-top: 5px;
+}
+
+.product-list .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Khoảng cách giữa các item */
+}
+
+.product-list .col-lg-4, .product-list .col-md-6, .product-list .col-sm-12 {
+    max-width: 100%; /* Đảm bảo không có phần tử nào vượt quá chiều rộng của container */
+    flex-basis: 32%; /* Giới hạn chiều rộng cơ bản để các ô trong mỗi hàng có kích thước đều */
+    box-sizing: border-box; /* Đảm bảo không bị thừa padding hoặc margin */
+}
+
+@media (max-width: 767px) {
+    .product-list .col-sm-12 {
+        flex-basis: 100%; /* Chiếm toàn bộ chiều rộng khi màn hình nhỏ */
+    }
+}
+
+
+</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
