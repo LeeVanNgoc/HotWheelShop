@@ -8,6 +8,9 @@ class Core {
 
     public function __construct(){
         $url = $this->getUrl();
+        if (!is_array($url)) {
+            $url[0] = 'Home';
+        }
         if(file_exists("../app/controller/".ucwords($url[0]).".php")){
             $this->currentController = ucwords($url[0]);
             unset($url[0]);
