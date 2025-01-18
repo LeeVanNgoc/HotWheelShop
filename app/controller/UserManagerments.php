@@ -19,52 +19,91 @@ class UserManagerments extends Controller {
         $this->view('userManagerments.all', $data); // Truyền dữ liệu ra view
     }
 
-    public function add() {
-        Auth::adminAuth(); // Kiểm tra quyền Admin
-        Csrf::CsrfToken(); // Tạo và kiểm tra CSRF token
-        $data['title1'] = 'Add User';
+public function add() {
+    Auth::adminAuth(); // Kiểm tra quyền Admin
+    Csrf::CsrfToken(); // Tạo và kiểm tra CSRF token
+    $data['title1'] = 'Add User';
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addUser'])) {
-            // Nhận dữ liệu từ form
-            $name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
-            $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-            $password = $_POST['password'];
-            $confirmPassword = $_POST['confirm_password']; // Thêm xác nhận mật khẩu
-            $admin = $_POST['admin']; // Lấy giá trị admin từ form (admin hoặc user)
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addUser'])) {
+        // Nhận dữ liệu từ form
+        $name = filter_var($_POST['name'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+        $password = $_POST['password'];
+        $confirmPassword = $_POST['confirm_password'];
+        $admin = $_POST['admin'];
+        $active = isset($_POST['active']) ? 1 : 0; // Kiểm tra trạng thái active (checkbox)
 
-            // Kiểm tra nếu dữ liệu hợp lệ
-            if (empty($name) || empty($email) || empty($password) || empty($confirmPassword) || empty($admin)) {
-                $data['error'] = "Please fill in all fields.";
+        // Kiểm tra dữ liệu hợp lệ
+        if (empty($name) || empty($email) || empty($password) || empty($confirmPassword) || empty($admin)) {
+            $data['error'] = "Please fill in all fields.";
+            $this->view('userManagerments.add', $data);
+            return;
+        }
+
+        if ($password !== $confirmPassword) {
+            $data['error'] = "Passwords do not match.";
+            $this->view('userManagerments.add', $data);
+            return;
+        }
+
+        if ($this->userManagermentModel->findUserByEmail($email)) {
+            $data['error'] = "Email already exists!";
+            $this->view('userManagerments.add', $data);
+            return;
+        }
+
+        // Xử lý tải ảnh lên
+        $imageName = "default.png"; // Ảnh mặc định
+        if (!empty($_FILES['profile_image']['name'])) {
+            $imageTmpPath = $_FILES['profile_image']['tmp_name'];
+            $imageName = time() . "_" . basename($_FILES['profile_image']['name']);
+            $imagePath = "uploads/" . $imageName;
+
+            if (!move_uploaded_file($imageTmpPath, $imagePath)) {
+                $data['error'] = "Failed to upload image.";
                 $this->view('userManagerments.add', $data);
                 return;
             }
+        }
 
-            if ($password !== $confirmPassword) {
-                $data['error'] = "Passwords do not match.";
-                $this->view('userManagerments.add', $data);
-                return;
-            }
+        // Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            if ($this->userManagermentModel->findUserByEmail($email)) {
-                $data['error'] = "Email already exists!";
-                $this->view('userManagerments.add', $data);
-                return;
-            }
+        // Thêm người dùng vào cơ sở dữ liệu, đã xác nhận và có trạng thái active
+        if ($this->userManagermentModel->addUser($name, $email, $hashedPassword, $admin, 1, $active, $imageName)) {
+            Session::set('success', 'User added successfully and auto-confirmed!');
+            Redirect::to('/userManagerments');
+        } else {
+            $data['error'] = "Failed to add user.";
+            $this->view('userManagerments.add', $data);
+        }
+    } else {
+        // Hiển thị form thêm người dùng
+        $this->view('userManagerments.add');
+    }
+}
 
-            // Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            // Thêm người dùng mới vào cơ sở dữ liệu, bao gồm cả admin
-            if ($this->userManagermentModel->addUser($name, $email, $hashedPassword, $admin)) {
-                Session::set('success', 'User added successfully!');
-                Redirect::to('/userManagerments');
-            } else {
-                $data['error'] = "Failed to add user.";
-                $this->view('userManagerments.add', $data);
+    // ✅ Xóa logic xác nhận email, chỉ dùng confirm() để đăng nhập tự động
+    public function confirm($v = null) {
+        Auth::userGuest();
+        $data['title1'] = 'Confirm';
+
+        if (Session::name('email') != null && Session::name('email') != '') {
+            // ✅ Tự động đăng nhập nếu user đã được tạo
+            $email = Session::name('email');
+            $user = $this->userManagermentModel->findUserByEmail($email);
+
+            if ($user) {
+                Session::set('success', 'Your account has been auto-confirmed!');
+                Session::set('user_id', $user->user_id);
+                Session::set('user_name', $user->full_name);
+                Session::set('user_img', $user->image);
+                Session::clear('email');
+                Redirect::to('users/profile');
             }
         } else {
-            // Hiển thị form thêm người dùng
-            $this->view('userManagerments.add');
+            Redirect::to('users/login');
         }
     }
 
@@ -92,7 +131,7 @@ class UserManagerments extends Controller {
             $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
             $password = $_POST['password'];
             $confirmPassword = $_POST['confirm_password'];
-            $admin = $_POST['role'];  // Lấy giá trị role (admin hoặc user)
+            $role = $_POST['role'];  // Lấy giá trị role (admin hoặc user)
             $active = isset($_POST['active']) ? 1 : 0; // Kiểm tra nếu có checkbox active
 
             // Kiểm tra tính hợp lệ của dữ liệu
@@ -116,8 +155,15 @@ class UserManagerments extends Controller {
                 $hashedPassword = $user->password; // Giữ mật khẩu cũ nếu không có mật khẩu mới
             }
 
-            // Cập nhật người dùng
-            if ($this->userManagermentModel->updateUser($user_id, $name, $email, $hashedPassword, $admin, $active)) {
+            // Kiểm tra ảnh đại diện (nếu có)
+            if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
+                $image = $this->uploadAvatar($user_id); // Gọi hàm uploadAvatar để upload ảnh
+            } else {
+                $image = $user->image; // Nếu không thay đổi ảnh, giữ ảnh cũ
+            }
+
+            // Cập nhật thông tin người dùng vào cơ sở dữ liệu
+            if ($this->userManagermentModel->updateUser($user_id, $name, $email, $hashedPassword, $role, $active, $image)) {
                 Session::set('success', 'User updated successfully!');
                 Redirect::to('/userManagerments');
             } else {
@@ -125,11 +171,41 @@ class UserManagerments extends Controller {
                 $this->view('userManagerments.update', $data);
             }
         } else {
-            // Nếu chưa gửi form, chỉ cần hiển thị form với dữ liệu hiện tại
             $this->view('userManagerments.edit', $data);
         }
     }
 
+    // Hàm xử lý upload avatar trực tiếp
+    private function uploadAvatar($id) {
+        $image = $_FILES['profile_image']['name'];
+        $imageTmp = $_FILES['profile_image']['tmp_name'];
+        $imageType = $_FILES['profile_image']['type'];
+
+        if (!empty($image)) {
+            $uploadDir = dirname(ROOT) . '/public/uploads/';
+            $imageExt = pathinfo($image, PATHINFO_EXTENSION);
+            $imageName = time() . '.' . $imageExt;
+
+            if (!in_array($imageExt, ['jpg', 'png', 'jpeg', 'gif'])) {
+                return 'Invalid image format';
+            }
+
+            move_uploaded_file($imageTmp, $uploadDir . $imageName);
+
+            // Nếu có ảnh cũ, xóa ảnh cũ trước khi cập nhật ảnh mới
+            if (!empty($image)) {
+                $currentImagePath = $uploadDir . $image;
+                if (file_exists($currentImagePath)) {
+                    unlink($currentImagePath);
+                }
+            }
+
+            // Cập nhật ảnh mới trong cơ sở dữ liệu
+            $this->userManagermentModel->updateAvatar($id, $imageName);
+            return $imageName;
+        }
+        return 'default.jpg'; // Trả về ảnh mặc định nếu không có ảnh
+    }
 
 
     // Xóa người dùng
@@ -155,5 +231,29 @@ class UserManagerments extends Controller {
             Session::set('error', 'Failed to update user status!');
         }
         Redirect::to('/userManagerments');
+    }
+
+    public function show($id) {
+        Auth::adminAuth(); // Kiểm tra quyền Admin
+        Csrf::CsrfToken(); // Kiểm tra CSRF token
+
+        // Lấy thông tin người dùng từ DB
+        $user = $this->userManagermentModel->getUserById($id);
+
+        // Kiểm tra nếu không tìm thấy người dùng
+        if (!$user) {
+            Session::set('error', 'User not found!');
+            Redirect::to('/userManagerments');
+            return;
+        }
+
+        // Truyền thông tin người dùng vào biến data
+        $data = [
+            'title1' => 'User Details',
+            'user'   => $user
+        ];
+
+        // Hiển thị trang chi tiết người dùng
+        $this->view('userManagerments.show', $data);
     }
 }
