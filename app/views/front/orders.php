@@ -15,6 +15,7 @@
                         <th>Product Price</th>
                         <th>Quantity</th>
                         <th>SubTotal</th>
+                        <th>Creation Date</th>
                     </thead>
                     <?php 
                 
@@ -26,6 +27,7 @@
                                 <td><?php echo number_format($order->product_price,2) ?>$</td>
                                 <td><?php echo $order->product_qty ?></td>
                                 <td><?php echo number_format($order->product_price * $order->product_qty,2) ?>$</td>
+                                <td><?php echo date('Y-m-d H:i:s', strtotime($order->created_at)) ?></td>
                             </tbody>
                             <?php } 
                         }else{?>
