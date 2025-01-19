@@ -51,12 +51,6 @@
               </div>
             </li>
           <?php  }
-
-          if(Session::existed('email')){ ?>
-            <li class="nav-item">
-              <a class="nav-link" href="<?php echo URL ?>/users/confirm">Confirm</a>
-            </li>
-          <?php  }
         ?>
       </ul>
 
