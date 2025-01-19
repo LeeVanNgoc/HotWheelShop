@@ -29,9 +29,9 @@
           new Session;
             if(!Session::existed('admin_name')){ ?>
                 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="<?php echo URL ?>/admins/login">SignIn</a>
-                </li>
+                </li> -->
             <?php  }else{ ?>
                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown"><?php Session::get('admin_name') ?></a>
