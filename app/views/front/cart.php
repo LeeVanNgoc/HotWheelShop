@@ -25,16 +25,17 @@
                                     <?php echo $cart->qty ?>
                                 </td>
                                 <td>
-                                    <form class='d-inline' action="<?php echo URL ?>/carts/updateQty/<?php echo $cart->product ?> " method="POST">
-                                        <input style='width:35px;height:20px' type="text" name="qty">
-                                        <input type="hidden" name="csrf" value="<?php new Csrf(); echo Csrf::get()?>">
-                                        <input  class='d-inline btn btn-info btn-sm py-0' name='upQty' type="submit" value='Up'>
+                                    <form class='d-inline' action="<?php echo URL ?>/carts/updateQty/<?php echo $cart->product ?>" method="POST">
+                                        <input style='width:35px;height:20px' type="number" name="qty" min="1" required>
+                                        <input type="hidden" name="csrf" value="<?php new Csrf(); echo Csrf::get() ?>">
+                                        <input class='d-inline btn btn-info btn-sm py-0' name='upQty' type="submit" value='Up'>
                                     </form>
                                     <form class='d-inline' action="<?php echo URL ?>/carts/delete/<?php echo $cart->cart_id ?>" method='GET'>
-                                        <input type="hidden" name="csrf" value="<?php new Csrf(); echo Csrf::get()?>">
-                                        <button class='btn btn-danger delete  btn-sm py-0' type="submit" ><i class="fa fa-trash"></i></button>
+                                        <input type="hidden" name="csrf" value="<?php new Csrf(); echo Csrf::get() ?>">
+                                        <button class='btn btn-danger delete btn-sm py-0' type="submit"><i class="fa fa-trash"></i></button>
                                     </form>
                                 </td>
+
                                 <td><?php
                                 
                                     
